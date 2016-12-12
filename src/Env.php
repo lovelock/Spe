@@ -34,17 +34,19 @@ class Env
 
     /**
      * Env constructor.
-     * @param $envList
+     * @param array $envList
      * @param $envPath
      * @throws EnvException
      */
-    public function __construct($envList, $envPath)
+    public function __construct($envList = [], $envPath = '')
     {
         if (empty($envList)) {
             $this->envList = $envList;
         }
 
-        $this->envPath = $envPath;
+        if (!$envPath) {
+            $this->envPath = $envPath;
+        }
 
         $this->currentEnv = file_get_contents($this->envPath);
         if (!in_array($this->currentEnv, $this->envList, true)) {
