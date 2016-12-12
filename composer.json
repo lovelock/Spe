@@ -1,0 +1,16 @@
+{
+    "name": "lovelock/spe",
+    "description": "Simple environment switch for deploying.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Frost Wong",
+            "email": "frostwong@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Spe\\": "src/"}
+    },
+    "require": {}
+}
