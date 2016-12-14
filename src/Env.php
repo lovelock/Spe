@@ -30,7 +30,7 @@ class Env
      *
      * @var string
      */
-    private $envPath = __DIR__ . '/../../../../env';
+    private $envPath;
 
     /**
      * Env constructor.
@@ -38,13 +38,15 @@ class Env
      * @param $envPath
      * @throws EnvException
      */
-    public function __construct($envList, $envPath)
+    public function __construct($envPath = __DIR__ . '/../../../../env', $envList = [])
     {
+        if (!file_exists($envPath)) {
+            $this->envPath = getenv('DOCUMENT_ROOT') . '/env';
+        }
+
         if (empty($envList)) {
             $this->envList = $envList;
         }
-
-        $this->envPath = $envPath;
 
         $this->currentEnv = file_get_contents($this->envPath);
         if (!in_array($this->currentEnv, $this->envList, true)) {
