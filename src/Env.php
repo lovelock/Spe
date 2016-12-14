@@ -11,11 +11,16 @@ namespace Spe;
 
 class Env
 {
+    const DEV = 'dev';
+    const TEST = 'test';
+    const PROD = 'prod';
+    const EMU = 'emu';
+
     private $envList = [
-        'dev',
-        'test',
-        'prod',
-        'emu',
+        self::DEV,
+        self::TEST,
+        self::PROD,
+        self::EMU,
     ];
 
     /**
@@ -44,7 +49,7 @@ class Env
             $this->envPath = getenv('DOCUMENT_ROOT') . '/env';
         }
 
-        if (empty($envList)) {
+        if (!empty($envList)) {
             $this->envList = $envList;
         }
 
