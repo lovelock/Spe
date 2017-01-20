@@ -47,6 +47,8 @@ class Env
     {
         if (!file_exists($envPath)) {
             $this->envPath = getenv('DOCUMENT_ROOT') . '/env';
+        } else {
+            $this->envPath = $envPath;
         }
 
         if (!empty($envList)) {
