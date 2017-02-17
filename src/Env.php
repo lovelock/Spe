@@ -43,19 +43,26 @@ class Env
      * @param $envPath
      * @throws EnvException
      */
-    public function __construct($envPath = __DIR__ . '/../../../../env', $envList = [])
+    public function __construct($envList = [])
     {
-        if (!file_exists($envPath)) {
-            $this->envPath = getenv('DOCUMENT_ROOT') . '/env';
+        if (defined('WEB_ROOT')) {
+            $defaultEnvFile = WEB_ROOT . '/env';
+            if (file_exists($defaultEnvFile)) {
+                $this->envPath = $defaultEnvFile;
+            }
         } else {
-            $this->envPath = $envPath;
+            $this->envPath = getenv('DOCUMENT_ROOT') . '/env';
+        }
+
+        if (!file_exists($this->envPath)) {
+            throw new EnvException('No env file exists, please check again');
         }
 
         if (!empty($envList)) {
             $this->envList = $envList;
         }
 
-        $this->currentEnv = file_get_contents($this->envPath);
+        $this->currentEnv = trim(file_get_contents($this->envPath));
         if (!in_array($this->currentEnv, $this->envList, true)) {
             throw new EnvException('String inside ' . $this->envPath . ' must be element of ' . json_encode($this->envList));
         }
